@@ -669,6 +669,27 @@ void sf2_parse_preset(sf2 *sf, sf2_preset *ps) {
 	ps->parsed = 1;
 }
 
+void sf2_delete_preset_zone(sf2_preset_zone *preset_zone) {
+	fluid_list_t *next;
+	fluid_list_t *list = preset_zone->gen;
+	while (list) {
+		next = list->next;
+		FLUID_FREE(list->data);
+		FLUID_FREE(list);
+		list = next;
+	}
+
+	if (preset_zone->inst) {
+		preset_zone->inst->refcount--;
+
+		if (preset_zone->inst->refcount == 0) {
+			sf2_delete_inst(preset_zone->inst);
+		}
+	}
+
+	FLUID_FREE(preset_zone);
+}
+
 void sf2_delete_inst_zone(sf2_inst_zone *inst_zone) {
 	fluid_list_t *next;
 	fluid_list_t *list = inst_zone->gen;
@@ -702,27 +723,6 @@ void sf2_delete_inst(sf2_inst *inst) {
 	inst->global_inst_zone = NULL;
 	inst->inst_zones = NULL;
 	inst->parsed = 0;
-}
-
-void sf2_delete_preset_zone(sf2_preset_zone *preset_zone) {
-	fluid_list_t *next;
-	fluid_list_t *list = preset_zone->gen;
-	while (list) {
-		next = list->next;
-		FLUID_FREE(list->data);
-		FLUID_FREE(list);
-		list = next;
-	}
-
-	if (preset_zone->inst) {
-		preset_zone->inst->refcount--;
-
-		if (preset_zone->inst->refcount == 0) {
-			sf2_delete_inst(preset_zone->inst);
-		}
-	}
-
-	FLUID_FREE(preset_zone);
 }
 
 void sf2_delete_preset(sf2_preset *preset) {

@@ -1,3 +1,23 @@
+/* FluidSynth - A Software Synthesizer
+ *
+ * Copyright (C) 2003  Peter Hanappe and others.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public License
+ * as published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the Free
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ * 02111-1307, USA
+ */
+
 #include "fluid_voice.h"
 #include "fluid_mod.h"
 #include "fluid_chan.h"
@@ -132,10 +152,12 @@ int fluid_voice_init(fluid_voice_t* voice, fluid_sample_t* sample,
   voice->modenv_section = 0;
   voice->modenv_val = 0.0f;
 
+  /* mod lfo */
   voice->modlfo_val = 0.0;/* Fixme: Retrieve from any other existing
                              voice on this channel to keep LFOs in
                              unison? */
 
+  /* vib lfo */
   voice->viblfo_val = 0.0f; /* Fixme: See mod lfo */
 
   /* Clear sample history in filter */
@@ -280,6 +302,8 @@ int fluid_voice_calc_vol_mod_env(fluid_voice_t *voice) {
   fluid_env_data_t* env_data;
   fluid_real_t x;
 
+  /******************* vol env **********************/
+
   env_data = &voice->volenv_data[voice->volenv_section];
 
   /* skip to the next section of the envelope if necessary */
@@ -317,6 +341,8 @@ int fluid_voice_calc_vol_mod_env(fluid_voice_t *voice) {
     return 1;
   }
 
+  /******************* mod env **********************/
+
   env_data = &voice->modenv_data[voice->modenv_section];
 
   /* skip to the next section of the envelope if necessary */
@@ -348,6 +374,9 @@ int fluid_voice_calc_vol_mod_env(fluid_voice_t *voice) {
 }
 
 int fluid_voice_calc_lfo(fluid_voice_t *voice) {
+
+  /******************* mod lfo **********************/
+
   if (voice->ticks >= voice->modlfo_delay)
   {
     voice->modlfo_val += voice->modlfo_incr;
@@ -363,6 +392,8 @@ int fluid_voice_calc_lfo(fluid_voice_t *voice) {
       voice->modlfo_val = (fluid_real_t) - 2.0 - voice->modlfo_val;
     }
   }
+
+  /******************* vib lfo **********************/
 
   if (voice->ticks >= voice->viblfo_delay)
   {
@@ -415,6 +446,7 @@ int fluid_voice_calc_amp(fluid_voice_t *voice) {
      * the sample loop
      */
 
+    /* Is the playing pointer already in the loop? */
     if (voice->has_looped)
       amplitude_that_reaches_noise_floor = voice->amplitude_that_reaches_noise_floor_loop;
     else
@@ -1038,8 +1070,10 @@ int fluid_voice_write(fluid_voice_t* voice,
 
   /* turn off voice if short count (sample ended and not looping) */
   if (count < FLUID_BUFSIZE)
+  {
     fluid_voice_off(voice);
-
+  }
+// post_process:
   voice->ticks += FLUID_BUFSIZE;
   return FLUID_OK;
 }
@@ -2196,7 +2230,8 @@ void fluid_voice_check_sample_sanity(fluid_voice_t* voice)
       }
     }
 
-    /* Set the initial phase of the voice (using the result from the start offset modulators). */
+    /* Set the initial phase of the voice (using the result from the
+    start offset modulators). */
     fluid_phase_set_int(voice->phase, voice->start);
   } /* if startup */
 
@@ -2223,7 +2258,8 @@ void fluid_voice_check_sample_sanity(fluid_voice_t* voice)
   }
   /*    FLUID_LOG(FLUID_DBG, "Loop / sample sanity check: Sample from %i to %i, loop from %i to %i", voice->start, voice->end, voice->loopstart, voice->loopend); */
 
-  /* Sample sanity has been assured. Don't check again, until some sample parameter is changed by modulation. */
+  /* Sample sanity has been assured. Don't check again, until some
+     sample parameter is changed by modulation. */
   voice->check_sample_sanity_flag = 0;
 #if 0
   printf("Sane? playback loop from %i to %i\n", voice->loopstart, voice->loopend);
