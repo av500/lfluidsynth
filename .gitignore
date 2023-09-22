@@ -1,3 +1,4 @@
 rt/*.o
 src/*.o
 synth
+sf2/*
