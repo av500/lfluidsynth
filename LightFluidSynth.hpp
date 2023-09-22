@@ -17,22 +17,16 @@ class LightFluidSynth {
 public:
   LightFluidSynth() {
 
-    /* Create the settings. */
-    settings = new_fluid_settings();
-
-    /* Change the settings if necessary*/
-    fluid_settings_setnum(settings, "synth.sample-rate", SAMPLE_RATE);
-
-//  fluid_settings_setstr(settings, "audio.period-size", "1024");
-
-    fluid_settings_setstr(settings, "synth.reverb.active", "no");
-    fluid_settings_setstr(settings, "synth.chorus.active", "no");
-    fluid_settings_setint(settings, "synth.polyphony", POLYPHONY);
-
-//    fluid_settings_setstr(settings, "synth.verbose", "yes");
+    fluid_settings_t settings;
+    fluid_synth_settings(&settings);
+    settings.sample_rate = SAMPLE_RATE;
+    settings.reverb = 0;
+    settings.chorus = 0;
+    settings.polyphony = POLYPHONY;
+    settings.verbose = 0;
 
     /* Create the synthesizer. */
-    synth = new_fluid_synth(settings);
+    synth = new_fluid_synth(&settings);
 
 //    fluid_synth_set_interp_method(synth, -1, FLUID_INTERP_LINEAR);
     fluid_synth_set_interp_method(synth, -1, FLUID_INTERP_NONE);
@@ -43,7 +37,6 @@ public:
   ~LightFluidSynth() {
     fluid_synth_sfunload(synth,sfont_id,1);
     delete_fluid_synth(synth);
-    delete_fluid_settings(settings);
   }
 
   void loadSF2(char *filename)
