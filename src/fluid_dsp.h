@@ -2,14 +2,14 @@
 #define FLUID_DSP_H
 
 #ifdef __arm__
-	static __INLINE int32_t __SMULWB(int16_t a,int32_t b)
+	static inline int32_t __SMULWB(int16_t a,int32_t b)
 	  {
 			int32_t result;
 			__asm__ ("smulwb %0, %1, %2":"=r"(result):"r"(b), "r"(a));
 			return result;
 	  }
 
-	static __INLINE int32_t __SMLAWB(int16_t a,int32_t b,int32_t accu)
+	static inline int32_t __SMLAWB(int16_t a,int32_t b,int32_t accu)
 	  {
 		  int32_t result ;
   		  __asm__ ("smlawb %0, %1, %2,%3":"=r" (result): "r" (b), "r" (a), "r" (accu)) ;
