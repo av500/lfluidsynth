@@ -125,7 +125,7 @@ void fluid_version(int *major, int *minor, int *micro)
  */
 char* fluid_version_str(void)
 {
-  return FLUIDSYNTH_VERSION;
+  return (char*)FLUIDSYNTH_VERSION;
 }
 
 /*
@@ -639,7 +639,6 @@ char* fluid_synth_error(fluid_synth_t* synth)
 int fluid_synth_noteon(fluid_synth_t* synth, int chan, int key, int vel)
 {
   fluid_channel_t* channel;
-  int r = FLUID_FAILED;
 
   /* check the ranges of the arguments */
   if ((chan < 0) || (chan >= synth->midi_channels)) {
