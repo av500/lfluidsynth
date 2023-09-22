@@ -23,15 +23,9 @@ SF2_PROF_FILE=ct4mgm.sf2
 
 all: $(FLUIDSYNTH_OBJS) rt/RtAudio.o rt/RtMidi.o
 	g++ $(CFLAGS) $(SYNTH_CFLAGS) synth.cpp -o synth $^ -lc -lm -lpthread -lasound -lpulse -lpulse-simple
-	objdump -sSt synth >synth.lst
-
 
 rt/RtAudio.o:
 	g++ -Irt -D__LINUX_PULSE__ -c -o rt/RtAudio.o rt/RtAudio.cpp
-
-rt/RtMidi.o:
-	g++ -Irt -D__LINUX_ALSA__ -c -o rt/RtMidi.o rt/RtMidi.cpp
-
 
 timgm6mb.sf2:
 	wget https://launchpad.net/ubuntu/+archive/primary/+files/timgm6mb-soundfont_1.3.orig.tar.gz
