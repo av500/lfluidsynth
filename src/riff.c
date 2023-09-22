@@ -43,13 +43,13 @@ int riff_printf(const char *format, ... ){
 
 //** FILE **
 /*****************************************************************************/
-size_t read_file(void *fh, void *ptr, size_t size){
+static size_t read_file(void *fh, void *ptr, size_t size){
 //	printf("READ %d\n",size);
 	return FLUID_FREAD(ptr, 1, size, (fluid_file)fh);
 }
 
 /*****************************************************************************/
-size_t seek_file(void *fh, size_t pos){
+static size_t seek_file(void *fh, size_t pos){
 //	printf("SEEK %d\n",pos);
 	FLUID_FSEEK((fluid_file)fh, pos, SEEK_SET);
 	return pos;
