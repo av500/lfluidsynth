@@ -75,12 +75,12 @@ char* fluid_tuning_get_name(fluid_tuning_t* tuning)
   return tuning->name;
 }
 
-void fluid_tuning_set_key(fluid_tuning_t* tuning, int key, double pitch)
+void fluid_tuning_set_key(fluid_tuning_t* tuning, int key, float pitch)
 {
   tuning->pitch[key] = pitch;
 }
 
-void fluid_tuning_set_octave(fluid_tuning_t* tuning, double* pitch_deriv)
+void fluid_tuning_set_octave(fluid_tuning_t* tuning, float* pitch_deriv)
 {
   int i;
 
@@ -89,7 +89,7 @@ void fluid_tuning_set_octave(fluid_tuning_t* tuning, double* pitch_deriv)
   }
 }
 
-void fluid_tuning_set_all(fluid_tuning_t* tuning, double* pitch)
+void fluid_tuning_set_all(fluid_tuning_t* tuning, float* pitch)
 {
   int i;
 
@@ -98,7 +98,7 @@ void fluid_tuning_set_all(fluid_tuning_t* tuning, double* pitch)
   }
 }
 
-void fluid_tuning_set_pitch(fluid_tuning_t* tuning, int key, double pitch)
+void fluid_tuning_set_pitch(fluid_tuning_t* tuning, int key, float pitch)
 {
   if ((key >= 0) && (key < 128)) {
     tuning->pitch[key] = pitch;

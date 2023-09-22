@@ -80,7 +80,7 @@ int fluid_debug(int level, char * fmt, ...);
 
 
 unsigned int fluid_curtime(void);
-double fluid_utime(void);
+float fluid_utime(void);
 
 /**
     Timers
@@ -171,7 +171,7 @@ void fluid_profiling_print(void);
 typedef struct _fluid_profile_data_t {
   int num;
   char* description;
-  double min, max, total;
+  float min, max, total;
   unsigned int count;
 } fluid_profile_data_t;
 
@@ -183,8 +183,8 @@ extern fluid_profile_data_t fluid_profile_data[];
 /** Macro to calculate the min/avg/max. Needs a time refence and a
     profile number. */
 #define fluid_profile(_num,_ref) { \
-  double _now = fluid_utime(); \
-  double _delta = _now - _ref; \
+  float _now = fluid_utime(); \
+  float _delta = _now - _ref; \
   fluid_profile_data[_num].min = _delta < fluid_profile_data[_num].min ? _delta : fluid_profile_data[_num].min; \
   fluid_profile_data[_num].max = _delta > fluid_profile_data[_num].max ? _delta : fluid_profile_data[_num].max; \
   fluid_profile_data[_num].total += _delta; \

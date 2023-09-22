@@ -116,7 +116,7 @@ struct _fluid_synth_t
   int cur;                           /** the current sample in the audio buffers to be output */
 
   char outbuf[256];                  /** buffer for message output */
-  double cpu_load;
+  float cpu_load;
 
   fluid_tuning_t*** tuning;           /** 128 banks of 128 programs for the tunings */
   fluid_tuning_t* cur_tuning;         /** current tuning in the iteration */
@@ -409,18 +409,18 @@ int fluid_synth_get_bank_offset(fluid_synth_t* synth, int sfont_id);
    */
 
   /** Set the parameters for the built-in reverb unit */
-void fluid_synth_set_reverb(fluid_synth_t* synth, double roomsize, 
-           double damping, double width, double level);
+void fluid_synth_set_reverb(fluid_synth_t* synth, float roomsize, 
+           float damping, float width, float level);
 
   /** Turn on (1) / off (0) the built-in reverb unit */
 void fluid_synth_set_reverb_on(fluid_synth_t* synth, int on);
 
 
   /** Query the current state of the reverb. */
-double fluid_synth_get_reverb_roomsize(fluid_synth_t* synth);
-double fluid_synth_get_reverb_damp(fluid_synth_t* synth);
-double fluid_synth_get_reverb_level(fluid_synth_t* synth);
-double fluid_synth_get_reverb_width(fluid_synth_t* synth);
+float fluid_synth_get_reverb_roomsize(fluid_synth_t* synth);
+float fluid_synth_get_reverb_damp(fluid_synth_t* synth);
+float fluid_synth_get_reverb_level(fluid_synth_t* synth);
+float fluid_synth_get_reverb_width(fluid_synth_t* synth);
 
   /* Those are the default settings for the reverb */
 #define FLUID_REVERB_DEFAULT_ROOMSIZE 0.2f
@@ -443,17 +443,17 @@ enum fluid_chorus_mod {
    * If faulty parameters are given, all new settings are discarded.
    * Keep in mind, that the needed CPU time is proportional to 'nr'.
    */
-void fluid_synth_set_chorus(fluid_synth_t* synth, int nr, double level, 
-           double speed, double depth_ms, int type);
+void fluid_synth_set_chorus(fluid_synth_t* synth, int nr, float level, 
+           float speed, float depth_ms, int type);
 
   /** Turn on (1) / off (0) the built-in chorus unit */
 void fluid_synth_set_chorus_on(fluid_synth_t* synth, int on);
 
   /** Query the current state of the chorus. */
 int fluid_synth_get_chorus_nr(fluid_synth_t* synth);
-double fluid_synth_get_chorus_level(fluid_synth_t* synth);
-double fluid_synth_get_chorus_speed_Hz(fluid_synth_t* synth);
-double fluid_synth_get_chorus_depth_ms(fluid_synth_t* synth);
+float fluid_synth_get_chorus_level(fluid_synth_t* synth);
+float fluid_synth_get_chorus_speed_Hz(fluid_synth_t* synth);
+float fluid_synth_get_chorus_depth_ms(fluid_synth_t* synth);
 int fluid_synth_get_chorus_type(fluid_synth_t* synth); /* see fluid_chorus_mod */
 
   /* Those are the default settings for the chorus. */
@@ -592,7 +592,7 @@ float fluid_synth_get_gen(fluid_synth_t* synth, int chan, int param);
       \param pitch The array of pitch values. The array length has to be 128.
   */
 
-int fluid_synth_create_key_tuning(fluid_synth_t* synth, int tuning_bank, int tuning_prog, char* name, double* pitch);
+int fluid_synth_create_key_tuning(fluid_synth_t* synth, int tuning_bank, int tuning_prog, char* name, float* pitch);
 
   /** Create a new octave-based tuning with given name, number, and
       pitches.  The array 'pitches' should have length 12 and contains
@@ -607,7 +607,7 @@ int fluid_synth_create_key_tuning(fluid_synth_t* synth, int tuning_bank, int tun
       \param pitch The array of pitch derivations. The array length has to be 12.
   */
 
-int fluid_synth_create_octave_tuning(fluid_synth_t* synth, int tuning_bank, int tuning_prog, char* name, double* pitch);
+int fluid_synth_create_octave_tuning(fluid_synth_t* synth, int tuning_bank, int tuning_prog, char* name, float* pitch);
 
   /** Request a note tuning changes. Both they 'keys' and 'pitches'
       arrays should be of length 'num_pitches'. If 'apply' is non-zero,
@@ -625,7 +625,7 @@ int fluid_synth_create_octave_tuning(fluid_synth_t* synth, int tuning_bank, int 
   */
 
 int fluid_synth_tune_notes(fluid_synth_t* synth, int tuning_bank, int tuning_prog,
-        int len, int *keys, double* pitch, int apply);
+        int len, int *keys, float* pitch, int apply);
 
   /** Select a tuning for a channel. 
 
@@ -674,7 +674,7 @@ int fluid_synth_tuning_iteration_next(fluid_synth_t* synth, int* bank, int* prog
 
       \param synth The synthesizer object
   */
-double fluid_synth_get_cpu_load(fluid_synth_t* synth);
+float fluid_synth_get_cpu_load(fluid_synth_t* synth);
 
   /** Get a textual representation of the last error */
 char* fluid_synth_error(fluid_synth_t* synth);

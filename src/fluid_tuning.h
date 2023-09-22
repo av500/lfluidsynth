@@ -38,7 +38,7 @@ struct _fluid_tuning_t {
   char* name;
   int bank;
   int prog;
-  double pitch[128];  /* the pitch of every key, in cents */
+  float pitch[128];  /* the pitch of every key, in cents */
 };
 
 fluid_tuning_t* new_fluid_tuning(char* name, int bank, int prog);
@@ -50,12 +50,12 @@ char* fluid_tuning_get_name(fluid_tuning_t* tuning);
 #define fluid_tuning_get_bank(_t) ((_t)->bank)
 #define fluid_tuning_get_prog(_t) ((_t)->prog)
 
-void fluid_tuning_set_pitch(fluid_tuning_t* tuning, int key, double pitch);
+void fluid_tuning_set_pitch(fluid_tuning_t* tuning, int key, float pitch);
 #define fluid_tuning_get_pitch(_t, _key) ((_t)->pitch[_key])
 
-void fluid_tuning_set_octave(fluid_tuning_t* tuning, double* pitch_deriv);
+void fluid_tuning_set_octave(fluid_tuning_t* tuning, float* pitch_deriv);
 
-void fluid_tuning_set_all(fluid_tuning_t* tuning, double* pitch);
+void fluid_tuning_set_all(fluid_tuning_t* tuning, float* pitch);
 #define fluid_tuning_get_all(_t) (&(_t)->pitch[0])
 
 #endif /* _FLUID_TUNING_H */

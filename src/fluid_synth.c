@@ -1367,8 +1367,8 @@ int fluid_synth_set_reverb_preset(fluid_synth_t* synth, int num)
   return FLUID_FAILED;
 }
 
-void fluid_synth_set_reverb(fluid_synth_t* synth, double roomsize, double damping,
-                            double width, double level)
+void fluid_synth_set_reverb(fluid_synth_t* synth, float roomsize, float damping,
+                            float width, float level)
 {
   /*   fluid_mutex_lock(synth->busy); /\* Don't interfere with the audio thread *\/ */
   /*   fluid_mutex_unlock(synth->busy); */
@@ -1379,8 +1379,8 @@ void fluid_synth_set_reverb(fluid_synth_t* synth, double roomsize, double dampin
   fluid_revmodel_setlevel(synth->reverb, level);
 }
 
-void fluid_synth_set_chorus(fluid_synth_t* synth, int nr, double level,
-                            double speed, double depth_ms, int type)
+void fluid_synth_set_chorus(fluid_synth_t* synth, int nr, float level,
+                            float speed, float depth_ms, int type)
 {
   /*   fluid_mutex_lock(synth->busy); /\* Don't interfere with the audio thread *\/ */
   /*   fluid_mutex_unlock(synth->busy); */
@@ -1402,7 +1402,7 @@ int fluid_synth_write_float(fluid_synth_t* synth, int len,
   float* right_out = (float*) rout;
   fluid_buf_t* left_in = synth->left_buf[0];
   fluid_buf_t* right_in = synth->right_buf[0];
-  double time = fluid_utime();
+  float time = fluid_utime();
 
   /* make sure we're playing */
   if (synth->state != FLUID_SYNTH_PLAYING) {
@@ -2092,19 +2092,19 @@ int fluid_synth_get_chorus_nr(fluid_synth_t* synth)
   return fluid_chorus_get_nr(synth->chorus);
 }
 
-double fluid_synth_get_chorus_level(fluid_synth_t* synth)
+float fluid_synth_get_chorus_level(fluid_synth_t* synth)
 {
-  return (double)fluid_chorus_get_level(synth->chorus);
+  return (float)fluid_chorus_get_level(synth->chorus);
 }
 
-double fluid_synth_get_chorus_speed_Hz(fluid_synth_t* synth)
+float fluid_synth_get_chorus_speed_Hz(fluid_synth_t* synth)
 {
-  return (double)fluid_chorus_get_speed_Hz(synth->chorus);
+  return (float)fluid_chorus_get_speed_Hz(synth->chorus);
 }
 
-double fluid_synth_get_chorus_depth_ms(fluid_synth_t* synth)
+float fluid_synth_get_chorus_depth_ms(fluid_synth_t* synth)
 {
-  return (double)fluid_chorus_get_depth_ms(synth->chorus);
+  return (float)fluid_chorus_get_depth_ms(synth->chorus);
 }
 
 int fluid_synth_get_chorus_type(fluid_synth_t* synth)
@@ -2114,24 +2114,24 @@ int fluid_synth_get_chorus_type(fluid_synth_t* synth)
 
 /* Purpose:
  * Returns the current settings_old of the reverb unit */
-double fluid_synth_get_reverb_roomsize(fluid_synth_t* synth)
+float fluid_synth_get_reverb_roomsize(fluid_synth_t* synth)
 {
-  return (double)fluid_revmodel_getroomsize(synth->reverb);
+  return (float)fluid_revmodel_getroomsize(synth->reverb);
 }
 
-double fluid_synth_get_reverb_damp(fluid_synth_t* synth)
+float fluid_synth_get_reverb_damp(fluid_synth_t* synth)
 {
-  return (double) fluid_revmodel_getdamp(synth->reverb);
+  return (float) fluid_revmodel_getdamp(synth->reverb);
 }
 
-double fluid_synth_get_reverb_level(fluid_synth_t* synth)
+float fluid_synth_get_reverb_level(fluid_synth_t* synth)
 {
-  return (double) fluid_revmodel_getlevel(synth->reverb);
+  return (float) fluid_revmodel_getlevel(synth->reverb);
 }
 
-double fluid_synth_get_reverb_width(fluid_synth_t* synth)
+float fluid_synth_get_reverb_width(fluid_synth_t* synth)
 {
-  return (double) fluid_revmodel_getwidth(synth->reverb);
+  return (float) fluid_revmodel_getwidth(synth->reverb);
 }
 
 /* Purpose:
@@ -2219,7 +2219,7 @@ fluid_synth_count_effects_channels(fluid_synth_t* synth)
   return synth->effects_channels;
 }
 
-double fluid_synth_get_cpu_load(fluid_synth_t* synth)
+float fluid_synth_get_cpu_load(fluid_synth_t* synth)
 {
   return synth->cpu_load;
 }
@@ -2290,7 +2290,7 @@ fluid_synth_create_tuning(fluid_synth_t* synth, int bank, int prog, char* name)
 
 int fluid_synth_create_key_tuning(fluid_synth_t* synth,
                                   int bank, int prog,
-                                  char* name, double* pitch)
+                                  char* name, float* pitch)
 {
   fluid_tuning_t* tuning = fluid_synth_create_tuning(synth, bank, prog, name);
   if (tuning == NULL) {
@@ -2305,7 +2305,7 @@ int fluid_synth_create_key_tuning(fluid_synth_t* synth,
 
 int fluid_synth_create_octave_tuning(fluid_synth_t* synth,
                                      int bank, int prog,
-                                     char* name, double* pitch)
+                                     char* name, float* pitch)
 {
   fluid_tuning_t* tuning = fluid_synth_create_tuning(synth, bank, prog, name);
   if (tuning == NULL) {
@@ -2316,7 +2316,7 @@ int fluid_synth_create_octave_tuning(fluid_synth_t* synth,
 }
 
 int fluid_synth_tune_notes(fluid_synth_t* synth, int bank, int prog,
-                           int len, int *key, double* pitch, int apply)
+                           int len, int *key, float* pitch, int apply)
 {
   fluid_tuning_t* tuning = fluid_synth_get_tuning(synth, bank, prog);
   int i;

@@ -422,10 +422,10 @@ fluid_timer_join(fluid_timer_t* timer)
  *               Time
  */
 
-static double fluid_cpu_frequency = -1.0;
+static float fluid_cpu_frequency = -1.0;
 
-double rdtsc(void);
-double fluid_estimate_cpu_frequency(void);
+float rdtsc(void);
+float fluid_estimate_cpu_frequency(void);
 
 void fluid_time_config(void)
 {
@@ -454,36 +454,36 @@ unsigned int fluid_curtime()
 
 #endif
 
-double fluid_utime(void)
+float fluid_utime(void)
 {
   return (rdtsc() / fluid_cpu_frequency);
 }
 
 #if !defined(__i386__)
 
-double rdtsc(void)
+float rdtsc(void)
 {
   return 0.0;
 }
 
-double fluid_estimate_cpu_frequency(void)
+float fluid_estimate_cpu_frequency(void)
 {
   return 1.0;
 }
 
 #else
 
-double rdtsc(void)
+float rdtsc(void)
 {
   unsigned int a, b;
 
   __asm__ ("rdtsc" : "=a" (a), "=d" (b));
-  return (double)b * (double)0x10000 * (double)0x10000 + a;
+  return (float)b * (float)0x10000 * (float)0x10000 + a;
 }
 
-double fluid_estimate_cpu_frequency(void)
+float fluid_estimate_cpu_frequency(void)
 {
-  double start, stop;
+  float start, stop;
   unsigned int a0, b0, a1, b1;
   unsigned int before, after;
 
@@ -496,8 +496,8 @@ double fluid_estimate_cpu_frequency(void)
   __asm__ ("rdtsc" : "=a" (a1), "=d" (b1));
 
 
-  start = (double)b0 * (double)0x10000 * (double)0x10000 + a0;
-  stop = (double)b1 * (double)0x10000 * (double)0x10000 + a1;
+  start = (float)b0 * (float)0x10000 * (float)0x10000 + a0;
+  stop = (float)b1 * (float)0x10000 * (float)0x10000 + a1;
 
   return 1000 * (stop - start) / (after - before);
 }

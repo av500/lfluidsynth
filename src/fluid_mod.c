@@ -50,7 +50,7 @@ void fluid_mod_set_dest(fluid_mod_t* mod, int dest)
   mod->dest = dest;
 }
 
-void fluid_mod_set_amount(fluid_mod_t* mod, double amount)
+void fluid_mod_set_amount(fluid_mod_t* mod, float amount)
 {
   mod->amount = (fluid_real_t) amount;
 }
@@ -80,7 +80,7 @@ int fluid_mod_get_dest(fluid_mod_t* mod)
   return mod->dest;
 }
 
-double fluid_mod_get_amount(fluid_mod_t* mod)
+float fluid_mod_get_amount(fluid_mod_t* mod)
 {
   return (fluid_real_t) mod->amount;
 }

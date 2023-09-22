@@ -162,8 +162,8 @@ new_fluid_chorus(fluid_real_t sample_rate)
     /* ii: Offset in terms of fractional samples ('subsamples') */
     for (ii = 0; ii < INTERPOLATION_SUBSAMPLES; ii++) {
       /* Move the origin into the center of the table */
-      double i_shifted = ((double) i - ((double) INTERPOLATION_SAMPLES) / 2.
-      + (double) ii / (double) INTERPOLATION_SUBSAMPLES);
+      float i_shifted = ((float) i - ((float) INTERPOLATION_SAMPLES) / 2.
+      + (float) ii / (float) INTERPOLATION_SUBSAMPLES);
       if (FLUID_ABS(i_shifted) < 0.000001) {
         /* sinc(0) cannot be calculated straightforward (limit needed
            for 0/0) */
@@ -349,11 +349,11 @@ fluid_chorus_update(fluid_chorus_t* chorus)
 
   if (chorus->new_speed_Hz < MIN_SPEED_HZ) {
     FLUID_LOG(FLUID_WARN, "chorus: speed is too low (min %f)! Setting value to min.",
-	     (double) MIN_SPEED_HZ);
+	     (float) MIN_SPEED_HZ);
     chorus->new_speed_Hz = MIN_SPEED_HZ;
   } else if (chorus->new_speed_Hz > MAX_SPEED_HZ) {
     FLUID_LOG(FLUID_WARN, "chorus: speed must be below %f Hz! Setting value to max.",
-	     (double) MAX_SPEED_HZ);
+	     (float) MAX_SPEED_HZ);
     chorus->new_speed_Hz = MAX_SPEED_HZ;
   }
   if (chorus->new_depth_ms < 0.0) {
@@ -411,8 +411,8 @@ fluid_chorus_update(fluid_chorus_t* chorus)
 
   for (i = 0; i < chorus->number_blocks; i++) {
     /* Set the phase of the chorus blocks equally spaced */
-    chorus->phase[i] = (int) ((double) chorus->modulation_period_samples
-			      * (double) i / (double) chorus->number_blocks);
+    chorus->phase[i] = (int) ((float) chorus->modulation_period_samples
+			      * (float) i / (float) chorus->number_blocks);
   }
 
   /* Start of the circular buffer */
@@ -515,11 +515,11 @@ void fluid_chorus_processmix(fluid_chorus_t* chorus, fluid_buf_t *in,
 void fluid_chorus_sine(int *buf, int len, int depth)
 {
   int i;
-  double val;
+  float val;
 
   for (i = 0; i < len; i++) {
-    val = sin((double) i / (double)len * 2.0 * M_PI);
-    buf[i] = (int) ((1.0 + val) * (double) depth / 2.0 * (double) INTERPOLATION_SUBSAMPLES);
+    val = sin((float) i / (float)len * 2.0 * M_PI);
+    buf[i] = (int) ((1.0 + val) * (float) depth / 2.0 * (float) INTERPOLATION_SUBSAMPLES);
     buf[i] -= 3* MAX_SAMPLES * INTERPOLATION_SUBSAMPLES;
     //    printf("%i %i\n",i,buf[i]);
   }
@@ -533,11 +533,11 @@ void fluid_chorus_triangle(int *buf, int len, int depth)
 {
   int i=0;
   int ii=len-1;
-  double val;
-  double val2;
+  float val;
+  float val2;
 
   while (i <= ii){
-    val = i * 2.0 / len * (double)depth * (double) INTERPOLATION_SUBSAMPLES;
+    val = i * 2.0 / len * (float)depth * (float) INTERPOLATION_SUBSAMPLES;
     val2= (int) (val + 0.5) - 3 * MAX_SAMPLES * INTERPOLATION_SUBSAMPLES;
     buf[i++] = (int) val2;
     buf[ii--] = (int) val2;

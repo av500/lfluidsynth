@@ -90,14 +90,14 @@ void fluid_mod_delete(fluid_mod_t * mod);
 void fluid_mod_set_source1(fluid_mod_t* mod, int src, int flags); 
 void fluid_mod_set_source2(fluid_mod_t* mod, int src, int flags); 
 void fluid_mod_set_dest(fluid_mod_t* mod, int dst); 
-void fluid_mod_set_amount(fluid_mod_t* mod, double amount); 
+void fluid_mod_set_amount(fluid_mod_t* mod, float amount); 
 
 int fluid_mod_get_source1(fluid_mod_t* mod);
 int fluid_mod_get_flags1(fluid_mod_t* mod);
 int fluid_mod_get_source2(fluid_mod_t* mod);
 int fluid_mod_get_flags2(fluid_mod_t* mod);
 int fluid_mod_get_dest(fluid_mod_t* mod);
-double fluid_mod_get_amount(fluid_mod_t* mod);
+float fluid_mod_get_amount(fluid_mod_t* mod);
 
 /* Determines, if two modulators are 'identical' (all parameters
    except the amount match) */
