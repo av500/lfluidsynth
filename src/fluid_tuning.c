@@ -35,7 +35,7 @@ fluid_tuning_t* new_fluid_tuning(char* name, int bank, int prog)
   tuning->name = NULL;
 
   if (name != NULL) {
-    tuning->name = FLUID_STRDUP(name);
+//    tuning->name = FLUID_STRDUP(name);
   }
 
   tuning->bank = bank;
@@ -66,7 +66,7 @@ void fluid_tuning_set_name(fluid_tuning_t* tuning, char* name)
     tuning->name = NULL;
   }
   if (name != NULL) {
-    tuning->name = FLUID_STRDUP(name);
+//    tuning->name = FLUID_STRDUP(name);
   }
 }
 
