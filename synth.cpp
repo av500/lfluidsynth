@@ -53,12 +53,11 @@ int audioCallback(void *outputBuffer, void *inputBuffer, unsigned int nBufferFra
 
 int main(int argc, char **argv)
 {
-/*
 	if (argc != 2) {
     		printf("Usage: synth file.sf2\n");
     		exit(0);
 	}
-*/
+
 	fluid_synth_t *synth;
 
 	fluid_settings_t settings;
@@ -74,8 +73,7 @@ int main(int argc, char **argv)
 //	fluid_synth_set_interp_method(synth, -1, FLUID_INTERP_LINEAR);
 	fluid_synth_set_interp_method(synth, -1, FLUID_INTERP_NONE);
 
-//	usynth->loadSF2(argv[1]);
-	int sfont_id = fluid_synth_sfload(synth, (char *)"FluidR3 GM.sf2", 1);
+	int sfont_id = fluid_synth_sfload(synth, argv[1], 1);
 
 	RtAudio dac;
 	RtAudio::StreamParameters rtParams;
