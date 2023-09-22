@@ -62,4 +62,3 @@ clean:
 #	rm -f callgrind.*
 	rm -f synth
 	rm -f test
-	rm -f *.lst
