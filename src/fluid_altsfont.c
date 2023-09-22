@@ -490,6 +490,7 @@ void sf2_parse_preset(sf2 *sf, sf2_preset *ps) {
 			riff_readInChunk(rh, &pgen, pgen_size);
 			switch (pgen.sfGenOper) {
 			case SFGEN_instrument:
+			{
 				global = 0;
 				sf2_inst *inst = sf2_inst_get(sf, pgen.genAmount.wAmount);
 				if (!inst) {
@@ -503,6 +504,7 @@ void sf2_parse_preset(sf2 *sf, sf2_preset *ps) {
 				psz->inst = inst;
 
 				break;
+			}
 			case SFGEN_keyRange:
 				psz->keylo = pgen.genAmount.ranges.byLo;
 				psz->keyhi = pgen.genAmount.ranges.byHi;
@@ -691,7 +693,7 @@ void sf2_delete_inst(sf2_inst *inst) {
 
 	while (list) {
 		next = list->next;
-		sf2_delete_inst_zone(list->data);
+		sf2_delete_inst_zone((sf2_inst_zone*)list->data);
 		FLUID_FREE(list);
 		list = next;
 	}
@@ -731,7 +733,7 @@ void sf2_delete_preset(sf2_preset *preset) {
 
 	while (list) {
 		next = list->next;
-		sf2_delete_preset_zone(list->data);
+		sf2_delete_preset_zone((sf2_preset_zone *)list->data);
 		FLUID_FREE(list);
 		list = next;
 	}
@@ -749,7 +751,7 @@ void sf2_delete_bank(sf2_bank *bank) {
 	fluid_list_t *list = bank->presets;
 	while (list) {
 		next = list->next;
-		sf2_delete_preset(list->data);
+		sf2_delete_preset((sf2_preset *)list->data);
 		FLUID_FREE(list->data);
 		FLUID_FREE(list);
 		list = next;
@@ -763,7 +765,7 @@ void sf2_delete(sf2 *sf) {
 
 	while (list) {
 		next = list->next;
-		sf2_delete_inst(list->data);
+		sf2_delete_inst((sf2_inst*)list->data);
 		FLUID_FREE(list->data);
 		FLUID_FREE(list);
 		list = next;
@@ -772,7 +774,7 @@ void sf2_delete(sf2 *sf) {
 	list = sf->banks;
 	while (list) {
 		next = list->next;
-		sf2_delete_bank(list->data);
+		sf2_delete_bank((sf2_bank*)list->data);
 		FLUID_FREE(list);
 		list = next;
 	}
@@ -1131,7 +1133,7 @@ fluid_sfont_t* fluid_altsfloader_load(fluid_sfloader_t* loader, const char* file
 	sf->samplepos = sf->smpl_pos;
 	sf->samplesize = rh->c_size;
 
-	fluid_file fd = rh->fh;
+	fluid_file fd = (fluid_file)rh->fh;
 
 #ifdef FLUID_SAMPLE_MMAP
 	sf->sampledata = (int16_t *)FLUID_MMAP(sf->samplepos, sf->samplesize, fd);
@@ -1139,11 +1141,11 @@ fluid_sfont_t* fluid_altsfloader_load(fluid_sfloader_t* loader, const char* file
 	sf->sampledata = (short*) FLUID_MALLOC(sf->samplesize);
 	if (sf->sampledata == NULL) {
 		FLUID_LOG(FLUID_ERR, "Out of memory");
-		return FLUID_FAILED;
+		return (fluid_sfont_t*)FLUID_FAILED;
 	}
 	if (FLUID_FREAD(sf->sampledata, 1, sf->samplesize, fd) < sf->samplesize) {
 		FLUID_LOG(FLUID_ERR, "Failed to read sample data");
-		return FLUID_FAILED;
+		return (fluid_sfont_t*)FLUID_FAILED;
 	}
 #endif
 	sfont->data = sf;
