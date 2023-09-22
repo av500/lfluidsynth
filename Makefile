@@ -1,5 +1,5 @@
 FLUIDSYNTH_OBJS=$(patsubst %.c,%.o,$(wildcard src/*.c))
-# fluidsynth/drivers/fluid_alsa.o fluidsynth/drivers/fluid_pulse.o
+
 CFLAGS=-O3 -g -I. -Isrc -D_GNU_SOURCE
 CFLAGS += -DFLUID_CALC_FORMAT_FLOAT -DFLUID_NEW_GEN_API 
 CFLAGS += -DFLUID_NO_NAMES -DFLUID_ALTSFONT
