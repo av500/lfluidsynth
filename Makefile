@@ -12,8 +12,8 @@ CFLAGS += -DFLUID_NO_NRPN_EXT
 #CFLAGS += -DFLUID_FIXED_POINT
 #CFLAGS += -DFLUID_ARM_OPT
 CFLAGS += -DFLUID_SIMPLE_IIR
-CFLAGS += -DFLUID_AVX_OPT 
-CFLAGS+=-march=native -mavx 
+CFLAGS+=-march=native
+
 #CFLAGS+=-ftree-vectorize -ffast-math -fsingle-precision-constant
 #SYNTH_CFLAGS=-Irt -D__LINUX_PULSE__ -D__LINUX_ALSA__ 
 
