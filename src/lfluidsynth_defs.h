@@ -9,8 +9,7 @@
 #define FLUID_PRINTF                 fluid_printf
 #define FLUID_VPRINTF		     fluid_vprintf
 
-//fluid_log( __VA_ARGS__)
-#define	FLUID_LOG(...) 
+#define	FLUID_LOG(...)               fluid_log( __VA_ARGS__)
 
 #define FLUID_MALLOC(_n)             fluid_malloc(_n)
 #define FLUID_CALLOC(_n,_s)          fluid_malloc(_n * _s)
