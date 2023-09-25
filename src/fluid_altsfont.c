@@ -837,7 +837,6 @@ fluid_altpreset_preset_noteon(fluid_preset_t* preset, fluid_synth_t* synth, int 
 	if (!sfpreset)
 		return 0;
 
-	fluid_sample_t* sample;
 	fluid_voice_t* voice;
 	fluid_mod_t * mod;
 	fluid_mod_t * mod_list[FLUID_NUM_MOD]; /* list for 'sorting' preset modulators */
@@ -1059,7 +1058,7 @@ int fluid_altsfont_sfont_delete(fluid_sfont_t* sfont)
 
 char* fluid_altsfont_sfont_get_name(fluid_sfont_t* sfont)
 {
-	sf2* sf = (sf2 *)sfont->data;
+//	sf2* sf = (sf2 *)sfont->data;
 
 	return NULL;
 }

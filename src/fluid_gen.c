@@ -148,11 +148,10 @@ int fluid_gen_set_default_values(fluid_gen_t* gen)
  */
 int fluid_gen_init(fluid_gen_t* gen, fluid_channel_t* channel)
 {
-    int i;
-
     fluid_gen_set_default_values(gen);
 
 #ifndef FLUID_NO_NRPN_EXT
+    int i;
     for (i = 0; i < GEN_LAST; i++) {
         gen[i].nrpn = fluid_channel_get_gen(channel, i);
 

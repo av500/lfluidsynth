@@ -393,5 +393,5 @@ void fluid_dump_modulator(fluid_mod_t * mod) {
   case GEN_ATTENUATION: FLUID_PRINTF("att"); break;
   default: FLUID_PRINTF("dest %i", dest);
   }; /* switch dest */
-  FLUID_PRINTF(", amount %f flags %i src2 %i flags2 %i\n", amount, flags1, src2, flags2);
+  FLUID_PRINTF(", amount %f flags %i src2 %i flags2 %i\n", (double)amount, flags1, src2, flags2);
 };

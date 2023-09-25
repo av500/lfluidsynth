@@ -658,9 +658,10 @@ int fluid_synth_noteon(fluid_synth_t* synth, int chan, int key, int vel)
     if (synth->verbose) {
       FLUID_LOG(FLUID_INFO, "noteon\t%d\t%d\t%d\t%05d\t%.3f\t%.3f\t%.3f\t%d\t%s",
                 chan, key, vel, 0,
-                (float) synth->ticks / 44100.0f,
-                (fluid_curtime() - synth->start) / 1000.0f,
-                0.0f, 0, "channel has no preset");
+                (double)(synth->ticks / 44100.0f),
+                (double)((fluid_curtime() - synth->start) / 1000.0f),
+                (double)0.0f, 
+		0, "channel has no preset");
     }
     return FLUID_FAILED;
   }
@@ -693,9 +694,9 @@ int fluid_synth_noteoff(fluid_synth_t* synth, int chan, int key)
         }
         FLUID_LOG(FLUID_INFO, "noteoff\t%d\t%d\t%d\t%05d\t%.3f\t%.3f\t%.3f\t%d",
                   voice->chan, voice->key, 0, voice->id,
-                  (float) (voice->start_time + voice->ticks) / 44100.0f,
-                  (fluid_curtime() - synth->start) / 1000.0f,
-                  (float) voice->ticks / 44100.0f,
+                  (double)((voice->start_time + voice->ticks) / 44100.0f),
+                  (double)((fluid_curtime() - synth->start) / 1000.0f),
+                  (double)(voice->ticks / 44100.0f),
                   used_voices);
       } /* if verbose */
       fluid_voice_noteoff(voice);
@@ -1014,7 +1015,7 @@ fluid_preset_t* fluid_synth_get_preset(fluid_synth_t* synth, unsigned int sfontn
 {
   fluid_preset_t* preset = NULL;
   fluid_sfont_t* sfont = NULL;
-  fluid_list_t* list = synth->sfont;
+//  fluid_list_t* list = synth->sfont;
   int offset;
 
   sfont = fluid_synth_get_sfont_by_id(synth, sfontnum);
@@ -1741,9 +1742,9 @@ fluid_voice_t* fluid_synth_alloc_voice(fluid_synth_t* synth, fluid_sample_t* sam
 
     FLUID_LOG(FLUID_INFO, "noteon\t%d\t%d\t%d\t%05d\t%.3f\t%.3f\t%.3f\t%d",
               chan, key, vel, synth->storeid,
-              (float) synth->ticks / 44100.0f,
-              (fluid_curtime() - synth->start) / 1000.0f,
-              0.0f,
+              (double)(synth->ticks / 44100.0f),
+              (double)((fluid_curtime() - synth->start) / 1000.0f),
+              (double)0.0f,
               k);
   }
 

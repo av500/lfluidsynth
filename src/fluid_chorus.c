@@ -349,11 +349,11 @@ fluid_chorus_update(fluid_chorus_t* chorus)
 
   if (chorus->new_speed_Hz < MIN_SPEED_HZ) {
     FLUID_LOG(FLUID_WARN, "chorus: speed is too low (min %f)! Setting value to min.",
-	     (float) MIN_SPEED_HZ);
+	     (double) MIN_SPEED_HZ);
     chorus->new_speed_Hz = MIN_SPEED_HZ;
   } else if (chorus->new_speed_Hz > MAX_SPEED_HZ) {
     FLUID_LOG(FLUID_WARN, "chorus: speed must be below %f Hz! Setting value to max.",
-	     (float) MAX_SPEED_HZ);
+	     (double) MAX_SPEED_HZ);
     chorus->new_speed_Hz = MAX_SPEED_HZ;
   }
   if (chorus->new_depth_ms < 0.0) {

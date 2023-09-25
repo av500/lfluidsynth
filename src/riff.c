@@ -344,7 +344,7 @@ int riff_seekInChunk(riff_handle *rh, size_t c_pos){
 	}
 	rh->pos = rh->c_pos_start + RIFF_CHUNK_DATA_OFFSET + c_pos;
 	rh->c_pos = c_pos;
-	size_t r = rh->fp_seek(rh->fh, rh->pos); //seek never fails, but pos might be invalid to read from
+	rh->fp_seek(rh->fh, rh->pos); //seek never fails, but pos might be invalid to read from
 	return RIFF_ERROR_NONE;
 }
 
