@@ -355,43 +355,43 @@ void fluid_dump_modulator(fluid_mod_t * mod) {
   int flags2 = mod->flags2;
   fluid_real_t amount = (fluid_real_t)mod->amount;
 
-  printf("Src: ");
+  FLUID_PRINTF("Src: ");
   if (flags1 & FLUID_MOD_CC) {
-    printf("MIDI CC=%i", src1);
+    FLUID_PRINTF("MIDI CC=%i", src1);
   } else {
     switch (src1) {
     case FLUID_MOD_NONE:
-      printf("None"); break;
+      FLUID_PRINTF("None"); break;
     case FLUID_MOD_VELOCITY:
-      printf("note-on velocity"); break;
+      FLUID_PRINTF("note-on velocity"); break;
     case FLUID_MOD_KEY:
-      printf("Key nr"); break;
+      FLUID_PRINTF("Key nr"); break;
     case FLUID_MOD_KEYPRESSURE:
-      printf("Poly pressure"); break;
+      FLUID_PRINTF("Poly pressure"); break;
     case FLUID_MOD_CHANNELPRESSURE:
-      printf("Chan pressure"); break;
+      FLUID_PRINTF("Chan pressure"); break;
     case FLUID_MOD_PITCHWHEEL:
-      printf("Pitch Wheel"); break;
+      FLUID_PRINTF("Pitch Wheel"); break;
     case FLUID_MOD_PITCHWHEELSENS:
-      printf("Pitch Wheel sens"); break;
+      FLUID_PRINTF("Pitch Wheel sens"); break;
     default:
-      printf("(unknown: %i)", src1);
+      FLUID_PRINTF("(unknown: %i)", src1);
     }; /* switch src1 */
   }; /* if not CC */
-  if (flags1 & FLUID_MOD_NEGATIVE) {printf("- ");} else {printf("+ ");};
-  if (flags1 & FLUID_MOD_BIPOLAR) {printf("bip ");} else {printf("unip ");};
-  printf("-> ");
+  if (flags1 & FLUID_MOD_NEGATIVE) {FLUID_PRINTF("- ");} else {FLUID_PRINTF("+ ");};
+  if (flags1 & FLUID_MOD_BIPOLAR) {FLUID_PRINTF("bip ");} else {FLUID_PRINTF("unip ");};
+  FLUID_PRINTF("-> ");
   switch (dest) {
-  case GEN_FILTERQ: printf("Q"); break;
-  case GEN_FILTERFC: printf("fc"); break;
-  case GEN_VIBLFOTOPITCH: printf("VibLFO-to-pitch"); break;
-  case GEN_MODENVTOPITCH: printf("ModEnv-to-pitch"); break;
-  case GEN_MODLFOTOPITCH: printf("ModLFO-to-pitch"); break;
-  case GEN_CHORUSSEND: printf("Chorus send"); break;
-  case GEN_REVERBSEND: printf("Reverb send"); break;
-  case GEN_PAN: printf("pan"); break;
-  case GEN_ATTENUATION: printf("att"); break;
-  default: printf("dest %i", dest);
+  case GEN_FILTERQ: FLUID_PRINTF("Q"); break;
+  case GEN_FILTERFC: FLUID_PRINTF("fc"); break;
+  case GEN_VIBLFOTOPITCH: FLUID_PRINTF("VibLFO-to-pitch"); break;
+  case GEN_MODENVTOPITCH: FLUID_PRINTF("ModEnv-to-pitch"); break;
+  case GEN_MODLFOTOPITCH: FLUID_PRINTF("ModLFO-to-pitch"); break;
+  case GEN_CHORUSSEND: FLUID_PRINTF("Chorus send"); break;
+  case GEN_REVERBSEND: FLUID_PRINTF("Reverb send"); break;
+  case GEN_PAN: FLUID_PRINTF("pan"); break;
+  case GEN_ATTENUATION: FLUID_PRINTF("att"); break;
+  default: FLUID_PRINTF("dest %i", dest);
   }; /* switch dest */
-  printf(", amount %f flags %i src2 %i flags2 %i\n", amount, flags1, src2, flags2);
+  FLUID_PRINTF(", amount %f flags %i src2 %i flags2 %i\n", amount, flags1, src2, flags2);
 };
