@@ -91,37 +91,32 @@ fluid_set_log_function(int level, fluid_log_function_t fun, void* data)
 void
 fluid_default_log_function(int level, char* message, void* data)
 {
-  FILE* out;
-
-  out = stderr;
-
   if (fluid_log_initialized == 0) {
     fluid_log_config();
   }
 
   switch (level) {
   case FLUID_PANIC:
-    FLUID_FPRINTF(out, "%s: panic: %s\n", fluid_libname, message);
+    FLUID_PRINTF("%s: panic: %s\n", fluid_libname, message);
     break;
   case FLUID_ERR:
-    FLUID_FPRINTF(out, "%s: error: %s\n", fluid_libname, message);
+    FLUID_PRINTF("%s: error: %s\n", fluid_libname, message);
     break;
   case FLUID_WARN:
-    FLUID_FPRINTF(out, "%s: warning: %s\n", fluid_libname, message);
+    FLUID_PRINTF("%s: warning: %s\n", fluid_libname, message);
     break;
   case FLUID_INFO:
-    FLUID_FPRINTF(out, "%s: %s\n", fluid_libname, message);
+    FLUID_PRINTF("%s: %s\n", fluid_libname, message);
     break;
   case FLUID_DBG:
 #if DEBUG
-    FLUID_FPRINTF(out, "%s: debug: %s\n", fluid_libname, message);
+    FLUID_PRINTF("%s: debug: %s\n", fluid_libname, message);
 #endif
     break;
   default:
-    FLUID_FPRINTF(out, "%s: %s\n", fluid_libname, message);
+    FLUID_PRINTF("%s: %s\n", fluid_libname, message);
     break;
   }
-  FLUID_FFLUSH(out);
 }
 
 /*

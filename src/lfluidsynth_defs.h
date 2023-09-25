@@ -45,6 +45,9 @@ typedef QSPI_FILE* fluid_file;
 
 #else
 
+#define FLUID_PRINTF                printf
+#define FLUID_VPRINTF		    vprintf
+
 #define	FLUID_LOG(...) fluid_log( __VA_ARGS__)
 
 typedef FILE*  fluid_file;

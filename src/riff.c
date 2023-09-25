@@ -32,11 +32,11 @@ static const char *riff_es[] = {
 
 /*****************************************************************************/
 //default print function
-int riff_printf(const char *format, ... ){
-
+int riff_printf(const char *format, ... )
+{
 	va_list args;
 	va_start(args, format);
-	int r = vfprintf(stderr, format, args);
+	int r = FLUID_VPRINTF(format, args);
 	va_end (args);
 	return r;
 }
@@ -217,7 +217,7 @@ void stack_push(riff_handle *rh, char *type){
 		if(ls_size_new == 0)
 			ls_size_new = RIFF_LEVEL_ALLOC; //default stack allocation
 		
-		struct riff_levelStackE *lsnew = (struct riff_levelStackE*) malloc(ls_size_new * sizeof(struct riff_levelStackE));
+		struct riff_levelStackE *lsnew = (struct riff_levelStackE*) FLUID_MALLOC(ls_size_new * sizeof(struct riff_levelStackE));
 		rh->ls_size = ls_size_new;
 		
 		//need to copy?
@@ -227,7 +227,7 @@ void stack_push(riff_handle *rh, char *type){
 		
 		//free old
 		if(rh->ls != NULL)
-			free(rh->ls);
+			FLUID_FREE(rh->ls);
 		rh->ls = lsnew;
 	}
 	
@@ -244,7 +244,7 @@ void stack_push(riff_handle *rh, char *type){
 /*****************************************************************************/
 //description: see header file
 riff_handle *riff_handleAllocate(){
-	riff_handle *rh = (riff_handle*)calloc(1, sizeof(riff_handle));
+	riff_handle *rh = (riff_handle*)FLUID_MALLOC(sizeof(riff_handle));
 	if(rh != NULL){
 		rh->fp_printf = riff_printf;
 	}
@@ -259,9 +259,9 @@ void riff_handleFree(riff_handle *rh){
 		return;
 	//free stack
 	if(rh->ls != NULL)
-		free(rh->ls);
+		FLUID_FREE(rh->ls);
 	//free struct
-	free(rh);
+	FLUID_FREE(rh);
 }
 
 /*****************************************************************************/

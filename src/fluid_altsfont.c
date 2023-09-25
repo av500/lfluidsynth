@@ -138,7 +138,7 @@ void sf2_init_rec(sf2 *sf) {
 
 		err = riff_seekNextChunk(rh);
 		if (err >= RIFF_ERROR_CRITICAL) {
-			printf("%s", riff_errorToString(err));
+			FLUID_PRINTF("%s", riff_errorToString(err));
 			break;
 		}
 		else if (err < RIFF_ERROR_CRITICAL  &&  err != RIFF_ERROR_NONE) {
