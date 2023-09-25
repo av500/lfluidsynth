@@ -28,9 +28,6 @@ static fluid_log_function_t fluid_log_function[LAST_LOG_LEVEL];
 static void* fluid_log_user_data[LAST_LOG_LEVEL];
 static int fluid_log_initialized = 0;
 
-static char* fluid_libname = "fluidsynth";
-
-
 void fluid_sys_config()
 {
   fluid_log_config();
@@ -97,24 +94,24 @@ fluid_default_log_function(int level, char* message, void* data)
 
   switch (level) {
   case FLUID_PANIC:
-    FLUID_PRINTF("%s: panic: %s\n", fluid_libname, message);
+    FLUID_PRINTF("[flui] PAN %s\n", message);
     break;
   case FLUID_ERR:
-    FLUID_PRINTF("%s: error: %s\n", fluid_libname, message);
+    FLUID_PRINTF("[flui] ERR %s\n", message);
     break;
   case FLUID_WARN:
-    FLUID_PRINTF("%s: warning: %s\n", fluid_libname, message);
+    FLUID_PRINTF("[flui] WRN %s\n", message);
     break;
   case FLUID_INFO:
-    FLUID_PRINTF("%s: %s\n", fluid_libname, message);
+    FLUID_PRINTF("[flui] INF %s\n", message);
     break;
   case FLUID_DBG:
-#if DEBUG
-    FLUID_PRINTF("%s: debug: %s\n", fluid_libname, message);
-#endif
+//#if DEBUG
+    FLUID_PRINTF("[flui] DBG %s\n", message);
+//#endif
     break;
   default:
-    FLUID_PRINTF("%s: %s\n", fluid_libname, message);
+    FLUID_PRINTF("[flui] ??? %s\n", message);
     break;
   }
 }
@@ -332,8 +329,6 @@ fluid_timer_t*
 new_fluid_timer(int msec, fluid_timer_callback_t callback, void* data,
 	       int new_thread, int auto_destroy)
 {
-  int err;
-
   fluid_timer_t* timer = FLUID_NEW(fluid_timer_t);
   if (timer == NULL) {
     FLUID_LOG(FLUID_ERR, "Out of memory");
