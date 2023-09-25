@@ -80,12 +80,12 @@ fluid_mod_t default_pitch_bend_mod;     /* SF2.01 section 8.4.10 */
 /* reverb presets */
 static fluid_revmodel_presets_t revmodel_preset[] = {
   /* name */    /* roomsize */ /* damp */ /* width */ /* level */
-  { "Test 1",          0.2f,      0.0f,       0.5f,       0.9f },
-  { "Test 2",          0.4f,      0.2f,       0.5f,       0.8f },
-  { "Test 3",          0.6f,      0.4f,       0.5f,       0.7f },
-  { "Test 4",          0.8f,      0.7f,       0.5f,       0.6f },
-  { "Test 5",          0.8f,      1.0f,       0.5f,       0.5f },
-  { NULL, 0.0f, 0.0f, 0.0f, 0.0f }
+  { (char*)"Test 1",          0.2f,      0.0f,       0.5f,       0.9f },
+  { (char*)"Test 2",          0.4f,      0.2f,       0.5f,       0.8f },
+  { (char*)"Test 3",          0.6f,      0.4f,       0.5f,       0.7f },
+  { (char*)"Test 4",          0.8f,      0.7f,       0.5f,       0.6f },
+  { (char*)"Test 5",          0.8f,      1.0f,       0.5f,       0.5f },
+  { (char*)NULL, 	      0.0f,      0.0f,       0.0f,       0.0f }
 };
 
 

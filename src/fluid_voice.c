@@ -535,7 +535,7 @@ int fluid_voice_iir_filter_calc(fluid_voice_t *voice) {
   }
 
   voice->last_fres = fres;
-
+  return 0;
 }
 
 // http://www.musicdsp.org/archive.php?classid=3#27
@@ -813,9 +813,8 @@ static fluid_real_t sinc_table7[FLUID_INTERP_MAX][7];
 /* Initializes interpolation tables */
 void fluid_dsp_float_config (void)
 {
-  int i, i2;
-  fluid_real_t x, v;
-  fluid_real_t i_shifted;
+  int i;
+  fluid_real_t x;
 
   /* Initialize the coefficients for the interpolation. The math comes
    * from a mail, posted by Olli Niemitalo to the music-dsp mailing
@@ -851,13 +850,13 @@ int fluid_voice_calc_effects(fluid_voice_t *voice, fluid_buf_t* dsp_reverb_buf, 
       in3 = *(dsp_buf++);
 
       *(dsp_reverb_buf) = FLUID_BUF_MAC(amp_reverb, in0, *(dsp_reverb_buf));
-      *(dsp_reverb_buf)++;
+      (dsp_reverb_buf)++;
       *(dsp_reverb_buf) = FLUID_BUF_MAC(amp_reverb, in1, *(dsp_reverb_buf));
-      *(dsp_reverb_buf)++;
+      (dsp_reverb_buf)++;
       *(dsp_reverb_buf) = FLUID_BUF_MAC(amp_reverb, in2, *(dsp_reverb_buf));
-      *(dsp_reverb_buf)++;
+      (dsp_reverb_buf)++;
       *(dsp_reverb_buf) = FLUID_BUF_MAC(amp_reverb, in3, *(dsp_reverb_buf));
-      *(dsp_reverb_buf)++;
+      (dsp_reverb_buf)++;
 
       dsp_cnt--;
     }
@@ -875,13 +874,13 @@ int fluid_voice_calc_effects(fluid_voice_t *voice, fluid_buf_t* dsp_reverb_buf, 
       in3 = *(dsp_buf++);
 
       *(dsp_chorus_buf) = FLUID_BUF_MAC(amp_chorus, in0, *(dsp_chorus_buf));
-      *(dsp_chorus_buf)++;
+      (dsp_chorus_buf)++;
       *(dsp_chorus_buf) = FLUID_BUF_MAC(amp_chorus, in1, *(dsp_chorus_buf));
-      *(dsp_chorus_buf)++;
+      (dsp_chorus_buf)++;
       *(dsp_chorus_buf) = FLUID_BUF_MAC(amp_chorus, in2, *(dsp_chorus_buf));
-      *(dsp_chorus_buf)++;
+      (dsp_chorus_buf)++;
       *(dsp_chorus_buf) = FLUID_BUF_MAC(amp_chorus, in3, *(dsp_chorus_buf));
-      *(dsp_chorus_buf)++;
+      (dsp_chorus_buf)++;
 
       dsp_cnt--;
     }
@@ -909,22 +908,22 @@ uint32_t fluid_voice_calc_stereo(fluid_voice_t *voice, fluid_buf_t* dsp_left_buf
 
 
     *(dsp_left_buf) = FLUID_BUF_MAC(amp_left, in0, *(dsp_left_buf));
-    *(dsp_left_buf)++;
+    (dsp_left_buf)++;
     *(dsp_left_buf) = FLUID_BUF_MAC(amp_left, in1, *(dsp_left_buf));
-    *(dsp_left_buf)++;
+    (dsp_left_buf)++;
     *(dsp_left_buf) = FLUID_BUF_MAC(amp_left, in2, *(dsp_left_buf));
-    *(dsp_left_buf)++;
+    (dsp_left_buf)++;
     *(dsp_left_buf) = FLUID_BUF_MAC(amp_left, in3, *(dsp_left_buf));
-    *(dsp_left_buf)++;
+    (dsp_left_buf)++;
 
     *(dsp_right_buf) = FLUID_BUF_MAC(amp_right, in0, *(dsp_right_buf));
-    *(dsp_right_buf)++;
+    (dsp_right_buf)++;
     *(dsp_right_buf) = FLUID_BUF_MAC(amp_right, in1, *(dsp_right_buf));
-    *(dsp_right_buf)++;
+    (dsp_right_buf)++;
     *(dsp_right_buf) = FLUID_BUF_MAC(amp_right, in2, *(dsp_right_buf));
-    *(dsp_right_buf)++;
+    (dsp_right_buf)++;
     *(dsp_right_buf) = FLUID_BUF_MAC(amp_right, in3, *(dsp_right_buf));
-    *(dsp_right_buf)++;
+    (dsp_right_buf)++;
 
     dsp_cnt--;
   } // 64 * 3 = 192 loop penalty (0.96us@200mhz)
@@ -1026,8 +1025,6 @@ int fluid_voice_write(fluid_voice_t* voice,
 
   if (!_PLAYING(voice)) return FLUID_OK;  /* make sure we're playing and that we have sample data */
 
-  unsigned int i;
-  fluid_real_t incr;
   uint32_t count;
 
   fluid_buf_t dsp_buf[FLUID_BUFSIZE];
@@ -1113,8 +1110,6 @@ void fluid_voice_start(fluid_voice_t* voice)
  * cents. */
 int fluid_voice_calculate_runtime_synthesis_parameters(fluid_voice_t* voice)
 {
-  fluid_real_t x;
-  fluid_real_t q_db;
   int i;
 
   int list_of_generators_to_initialize[35] = {
@@ -1792,7 +1787,6 @@ void fluid_voice_update_param(fluid_voice_t* voice, uint8_t gen)
  * */
 int fluid_voice_modulate(fluid_voice_t* voice, int cc, int ctrl)
 {
-  int i, k;
   fluid_mod_t* mod;
   int gen;
   fluid_real_t modval;
@@ -1847,7 +1841,7 @@ int fluid_voice_modulate(fluid_voice_t* voice, int cc, int ctrl)
 int fluid_voice_modulate_all(fluid_voice_t* voice)
 {
   fluid_mod_t* mod;
-  int i, k, gen;
+  int gen;
   fluid_real_t modval;
 
   /* Loop through all the modulators.
@@ -2008,8 +2002,6 @@ fluid_voice_off(fluid_voice_t* voice)
 void
 fluid_voice_add_mod(fluid_voice_t* voice, fluid_mod_t* mod, int mode)
 {
-  int i;
-
   /*
    * Some soundfonts come with a huge number of non-standard
    * controllers, because they have been designed for one particular
@@ -2077,7 +2069,6 @@ int fluid_voice_is_playing(fluid_voice_t* voice)
  */
 fluid_real_t fluid_voice_get_lower_boundary_for_attenuation(fluid_voice_t* voice)
 {
-  int i;
   fluid_mod_t* mod;
   fluid_real_t possible_att_reduction_cB = 0;
   fluid_real_t lower_bound;
