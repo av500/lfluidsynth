@@ -4,29 +4,29 @@
 #define FLUID_BUFSIZE       256
 
 #ifdef __arm__
-#include "qspi_wrapper.h"
+#include "fluid_glue.h"
 
+#define FLUID_PRINTF                 fluid_printf
+#define FLUID_VPRINTF		     fluid_vprintf
 
-#define	FLUID_LOG(...) 
 //fluid_log( __VA_ARGS__)
+#define	FLUID_LOG(...) 
 
+#define FLUID_MALLOC(_n)             fluid_malloc(_n)
+#define FLUID_CALLOC(_n,_s)          fluid_malloc(_n * _s)
+#define FLUID_REALLOC(_p,_n)         fluid_realloc(_p,_n)
+#define FLUID_NEW(_t)                (_t*)fluid_malloc(sizeof(_t))
+#define FLUID_ARRAY(_t,_n)           (_t*)fluid_malloc((_n)*sizeof(_t))
+#define FLUID_FREE(_p)               fluid_free(_p)
 
-#define FLUID_MALLOC(_n)             malloc(_n)
-#define FLUID_REALLOC(_p,_n)         realloc(_p,_n)
-#define FLUID_NEW(_t)                (_t*)malloc(sizeof(_t))
-#define FLUID_ARRAY(_t,_n)           (_t*)malloc((_n)*sizeof(_t))
-#define FLUID_FREE(_p)               free(_p)
-
-typedef QSPI_FILE* fluid_file;
-
-#define FLUID_FOPEN(_f,_m)       QSPI_fopen(_f,_m)
-#define FLUID_FCLOSE(_f)             QSPI_fclose(_f)
-#define FLUID_FREAD(_p,_s,_n,_f)     QSPI_fread(_p,_s,_n,_f)
-#define FLUID_FSEEK(_f,_n,_set)      QSPI_fseek(_f,_n,_set)
-#define FLUID_FTELL(_f)				 QSPI_ftell(_f)
-#define FLUID_FEOF(_f)				 QSPI_feof(_f)
-#define FLUID_REWIND(_f)			 QSPI_fseek(_f,0,SEEK_SET)
-#define FLUID_MMAP(_p,_s,_f)				QSPI_mmap(_p,_s,_f)
+#define FLUID_FOPEN(_f,_m)           fluid_fopen(_f,_m)
+#define FLUID_FCLOSE(_f)             fluid_fclose(_f)
+#define FLUID_FREAD(_p,_s,_n,_f)     fluid_fread(_p,_s,_n,_f)
+#define FLUID_FSEEK(_f,_n,_set)      fluid_fseek(_f,_n,_set)
+#define FLUID_FTELL(_f)              fluid_ftell(_f)
+#define FLUID_FEOF(_f)               fluid_feof(_f)
+#define FLUID_REWIND(_f)             fluid_fseek(_f,0,SEEK_SET)
+#define FLUID_MMAP(_p,_s,_f)         fluid_mmap(_p,_s,_f)
 
 #define FLUID_MEMCPY(_dst,_src,_n)   memcpy(_dst,_src,_n)
 #define FLUID_MEMSET(_s,_c,_n)       memset(_s,_c,_n)
