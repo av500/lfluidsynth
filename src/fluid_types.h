@@ -68,12 +68,6 @@ typedef uint64_t          uint64;
  *                      CONSTANTS
  */
 
-#define FLUID_SPRINTF                sprintf
-#define FLUID_FPRINTF                fprintf
-#define FLUID_PRINTF                 printf
-#define FLUID_FFLUSH(_o)             fflush(_o)
-#define FLUID_FLUSH()                FLUID_FFLUSH(stdout)
-
 #ifndef PI
 #define PI                          3.141592654
 #endif
