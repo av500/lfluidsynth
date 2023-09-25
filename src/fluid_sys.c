@@ -158,13 +158,42 @@ fluid_log_config(void)
 int
 fluid_log(int level, char* fmt, ...)
 {
-  fluid_log_function_t fun = NULL;
-
+#if 1
+  switch (level) {
+  case FLUID_PANIC:
+    FLUID_PRINTF("[flui] PAN ");
+    break;
+  case FLUID_ERR:
+    FLUID_PRINTF("[flui] ERR ");
+    break;
+  case FLUID_WARN:
+    FLUID_PRINTF("[flui] WRN ");
+    break;
+  case FLUID_INFO:
+    FLUID_PRINTF("[flui] INF ");
+    break;
+  case FLUID_DBG:
+//#if DEBUG
+    FLUID_PRINTF("[flui] DBG ");
+//#endif
+    break;
+  default:
+    FLUID_PRINTF("[flui] ??? ");
+    break;
+  }
+  va_list va;
+  va_start (va, fmt);
+  FLUID_VPRINTF(fmt, va);
+  va_end (va);
+  FLUID_PRINTF("\n");
+  return FLUID_FAILED;
+#else
   va_list args;
   va_start (args, fmt);
   vsnprintf(fluid_errbuf, sizeof (fluid_errbuf), fmt, args);
   va_end (args);
 
+  fluid_log_function_t fun = NULL;
   if ((level >= 0) && (level < LAST_LOG_LEVEL)) {
     fun = fluid_log_function[level];
     if (fun != NULL) {
@@ -172,6 +201,7 @@ fluid_log(int level, char* fmt, ...)
     }
   }
   return FLUID_FAILED;
+#endif
 }
 
 /**
