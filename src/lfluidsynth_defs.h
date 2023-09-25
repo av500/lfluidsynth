@@ -36,12 +36,12 @@ typedef QSPI_FILE* fluid_file;
 #define FLUID_STRCPY(_dst,_src)      strcpy(_dst,_src)
 #define FLUID_STRCHR(_s,_c)          strchr(_s,_c)
 
-#define FLUID_SIN(_s)				sinf(_s)
-#define FLUID_COS(_s)				cosf(_s)
-#define FLUID_ABS(_s)				fabsf(_s)
-#define FLUID_POW(_b,_e)			powf(_b,_e)
-#define FLUID_SQRT(_s)				sqrtf(_s)
-#define FLUID_MATH_LOG(_s)			logf(_s)
+#define FLUID_SIN(_s)                sinf(_s)
+#define FLUID_COS(_s)                cosf(_s)
+#define FLUID_ABS(_s)                fabsf(_s)
+#define FLUID_POW(_b,_e)             powf(_b,_e)
+#define FLUID_SQRT(_s)               sqrtf(_s)
+#define FLUID_MATH_LOG(_s)           logf(_s)
 
 #else
 
