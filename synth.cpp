@@ -68,13 +68,19 @@ int main(int argc, char **argv)
 	settings.polyphony   = POLYPHONY;
 	settings.verbose     = 0;
 
+printf("new_fluid_synth\n");
 	synth = new_fluid_synth(&settings);
 
 //	fluid_synth_set_interp_method(synth, -1, FLUID_INTERP_LINEAR);
+printf("fluid_synth_set_interp_method\n");
 	fluid_synth_set_interp_method(synth, -1, FLUID_INTERP_NONE);
 
+printf("fluid_synth_sfload\n");
 	int sfont_id = fluid_synth_sfload(synth, argv[1], 1);
 
+#define AUDIO
+
+#ifdef AUDIO
 	RtAudio dac;
 	RtAudio::StreamParameters rtParams;
 
@@ -99,27 +105,34 @@ int main(int argc, char **argv)
 
 	dac.openStream(&rtParams, NULL, AUDIO_FORMAT, SAMPLE_RATE, &bufferFrames, &audioCallback, (void *)synth, &options);
 	dac.startStream();
-
+#endif
 	int note = 0;
 	int chan = 0;
 	int prog = 1;
-	while (1) {
-		fluid_synth_program_change(synth, chan, prog);
-		int n = 40 + (note++ % 16);
+	int cnt  = 1;
+//goto SKIP;
+
+printf("PC\n");
+	fluid_synth_program_change(synth, chan, prog);
+	
+	while (cnt--) {
+		int n = 40; // + (note++ % 16);
 		printf("prog %3d  note %3d\n", prog, n);
 
+printf("ON\n");
 		fluid_synth_noteon(synth, chan, n, 127);
-		usleep(90000);
+		usleep(900000);
+printf("OFF\n");
 		fluid_synth_noteoff(synth, chan, n);
 		usleep(50000);
 
 		prog = (prog + 1) % 128;
 	}
 
-	printf("\n\nPress Enter to stop\n\n");
-	cin.get();
+SKIP:
+#ifdef AUDIO
 	dac.stopStream();
-
+#endif
 	fluid_synth_sfunload(synth,sfont_id,1);
     	delete_fluid_synth(synth);
 
