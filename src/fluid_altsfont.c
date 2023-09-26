@@ -1133,7 +1133,7 @@ fluid_sfont_t* fluid_altsfloader_load(fluid_sfloader_t* loader, const char* file
 	sf->samplesize = rh->c_size;
 
 	fluid_file fd = (fluid_file)rh->fh;
-
+	FLUID_LOG(FLUID_INFO, "size %d", sf->samplesize);
 #ifdef FLUID_SAMPLE_MMAP
 	sf->sampledata = (int16_t *)FLUID_MMAP(sf->samplepos, sf->samplesize, fd);
 #else
