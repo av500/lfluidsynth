@@ -22,6 +22,25 @@
 #include "fluid_sys.h"
 #include "fluid_log.h"
 
+#ifndef __arm__
+
+static int sum = 0;
+static int cnt = 0;
+void *dbg_malloc(size_t size)
+{
+	sum += size;
+	cnt ++;
+//printf("[FLUF] malloc %5d  %8d  %6d\n", size, sum, cnt);
+	return malloc(size);
+}
+
+void dbg_free(void *p)
+{
+//printf("[FLUF] free %6d\n", --cnt);
+	return free(p);
+}
+#endif
+
 static char fluid_errbuf[512];  /* buffer for error message */
 
 static fluid_log_function_t fluid_log_function[LAST_LOG_LEVEL];
