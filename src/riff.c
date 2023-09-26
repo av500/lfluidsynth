@@ -261,6 +261,9 @@ void riff_handleFree(riff_handle *rh){
 	//free stack
 	if(rh->ls != NULL)
 		FLUID_FREE(rh->ls);
+
+	FLUID_FCLOSE((fluid_file)rh->fh);
+
 	//free struct
 	FLUID_FREE(rh);
 }
