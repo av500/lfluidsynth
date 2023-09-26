@@ -12,8 +12,6 @@
 #define	FLUID_LOG(...)               fluid_log( __VA_ARGS__)
 
 #define FLUID_MALLOC(_n)             fluid_malloc(_n)
-#define FLUID_CALLOC(_n,_s)          fluid_malloc(_n * _s)
-#define FLUID_REALLOC(_p,_n)         fluid_realloc(_p,_n)
 #define FLUID_NEW(_t)                (_t*)fluid_malloc(sizeof(_t))
 #define FLUID_ARRAY(_t,_n)           (_t*)fluid_malloc((_n)*sizeof(_t))
 #define FLUID_FREE(_p)               fluid_free(_p)
@@ -52,7 +50,6 @@
 typedef FILE*  fluid_file;
 
 #define FLUID_MALLOC(_n)             malloc(_n)
-#define FLUID_REALLOC(_p,_n)         realloc(_p,_n)
 #define FLUID_NEW(_t)                (_t*)malloc(sizeof(_t))
 #define FLUID_ARRAY(_t,_n)           (_t*)malloc((_n)*sizeof(_t))
 #define FLUID_FREE(_p)               free(_p)

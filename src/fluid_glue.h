@@ -16,7 +16,6 @@ uint8_t *fluid_mmap (size_t pos, size_t size, fluid_file f);
 size_t 	fluid_fread (void *ptr, size_t size, size_t count, fluid_file f);
 
 void    *fluid_malloc(size_t size);
-void    *fluid_realloc(void *ptr, size_t size);
 void    fluid_free(void *ptr);
 
 int     fluid_printf(const char* format, ...);
