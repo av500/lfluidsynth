@@ -206,8 +206,9 @@ int fluid_channel_cc(fluid_channel_t* chan, int num, int value)
 
   case DATA_ENTRY_MSB:
   {
+#ifndef FLUID_NO_NRPN_EXT
     int data = (value << 7) + chan->cc[DATA_ENTRY_LSB];
-
+#endif
     if (chan->nrpn_active)  /* NRPN is active? */
     {
 #ifndef FLUID_NO_NRPN_EXT

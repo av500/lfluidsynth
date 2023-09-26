@@ -2120,12 +2120,12 @@ fluid_real_t fluid_voice_get_lower_boundary_for_attenuation(fluid_voice_t* voice
 /* Make sure, that sample start / end point and loop points are in proper order. When starting up, calculate the initial phase. */
 void fluid_voice_check_sample_sanity(fluid_voice_t* voice)
 {
-  int min_index_nonloop = (int) voice->sample->start;
-  int max_index_nonloop = (int) voice->sample->end;
+  uint32_t min_index_nonloop = (int) voice->sample->start;
+  uint32_t max_index_nonloop = (int) voice->sample->end;
 
   /* make sure we have enough samples surrounding the loop */
-  int min_index_loop = (int) voice->sample->start + FLUID_MIN_LOOP_PAD;
-  int max_index_loop = (int) voice->sample->end - FLUID_MIN_LOOP_PAD + 1; /* 'end' is last valid sample, loopend can be + 1 */
+  uint32_t min_index_loop = (int) voice->sample->start + FLUID_MIN_LOOP_PAD;
+  uint32_t max_index_loop = (int) voice->sample->end - FLUID_MIN_LOOP_PAD + 1; /* 'end' is last valid sample, loopend can be + 1 */
 
   if (!voice->check_sample_sanity_flag) {
     return;
@@ -2201,7 +2201,9 @@ void fluid_voice_check_sample_sanity(fluid_voice_t* voice)
     if ((int)voice->loopstart >= (int)voice->sample->loopstart
         && (int)voice->loopend <= (int)voice->sample->loopend) {
       /* Is there a valid peak amplitude available for the loop? */
-      if (voice->sample->amplitude_that_reaches_noise_floor_is_valid) {
+//      if (voice->sample->amplitude_that_reaches_noise_floor_is_valid) {
+// FIXME
+      if (0) {
         voice->amplitude_that_reaches_noise_floor_loop = voice->sample->amplitude_that_reaches_noise_floor / voice->synth_gain;
       } else {
         /* Worst case */
@@ -2241,7 +2243,7 @@ void fluid_voice_check_sample_sanity(fluid_voice_t* voice)
      * the sample, enter the loop and proceed as expected => no
      * actions required.
      */
-    int index_in_sample = fluid_phase_index(voice->phase);
+    uint32_t index_in_sample = fluid_phase_index(voice->phase);
     if (index_in_sample >= voice->loopend) {
       /* FLUID_LOG(FLUID_DBG, "Loop / sample sanity check: Phase after 2nd loop point!"); */
       fluid_phase_set_int(voice->phase, voice->loopstart);

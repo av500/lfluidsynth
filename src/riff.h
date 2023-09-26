@@ -96,7 +96,7 @@ typedef struct riff_handle {
 
 	struct riff_levelStackE *ls;   //level stack, resizes dynamically, to access the parent chunk data: h->ls[h->ls_level-1]
 	size_t ls_size;     //size of stack in num. elements, stack extends automatically if needed
-	int ls_level;       //current level, starts at 0
+	unsigned int ls_level;       //current level, starts at 0
 	
 	void *fh;  //file handle or memory address, only accessed by user FP functions
 	

@@ -61,6 +61,7 @@ int riff_open_file(riff_handle *rh, fluid_file f, size_t size){
 	if(rh == NULL)
 		return RIFF_ERROR_INVALID_HANDLE;
 	if(rh != NULL){
+		memset(rh, 0, sizeof(riff_handle));
 		rh->fh = f;
 		rh->size = size;
 		rh->pos_start = FLUID_FTELL(f); //current file offset of stream considered as start of RIFF file
