@@ -56,6 +56,9 @@ sf2_preset *sf2_bank_preset_get(sf2 *sf, uint16_t bank_num, uint16_t preset_num)
 
 riff_handle *sf2_open(const char *filename) {
 	fluid_file f = FLUID_FOPEN(filename, "rb");
+	if(!f) {
+		return NULL;
+	}
 	//get size
 	FLUID_FSEEK(f, 0, SEEK_END);
 	int fsize = FLUID_FTELL(f);
@@ -152,6 +155,9 @@ void sf2_init_rec(sf2 *sf) {
 
 sf2 *sf2_load(const char *filename) {
 	riff_handle *rh = sf2_open(filename);
+	if(!rh) {
+		return NULL;
+	}
 	sf2 *sf = FLUID_NEW(sf2);
 	sf->rh = rh;
 	sf->banks = NULL;
@@ -1117,6 +1123,10 @@ fluid_sfont_t* fluid_altsfloader_load(fluid_sfloader_t* loader, const char* file
 	fluid_sfont_t* sfont;
 
 	sf = sf2_load(filename);
+	if(!sf) {
+		FLUID_LOG(FLUID_ERR, "no file %s", filename);
+		return NULL;
+	}
 	sf2_load_presets(sf);
 	sf->filename = (char*)filename;
 
