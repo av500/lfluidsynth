@@ -1,6 +1,8 @@
 #ifndef _FLUID_GLUE_H
 #define _FLUID_GLUE_H
 
+#include "stm32h7xx.h"
+
 typedef struct FLUID_FILE {
 	void *f;
 } FLUID_file;
